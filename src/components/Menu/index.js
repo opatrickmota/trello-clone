@@ -14,7 +14,6 @@ export default function Menu(){
 
     function toggleMenu(){
         setIsActive(!isActive)
-        console.log('entrou')
     }
 
     return(
@@ -28,7 +27,7 @@ export default function Menu(){
                     </header>
 
                     <Link to="/boards">Meus Quadros</Link>
-                    
+
                 </MenuContent>
                 :
                 <Button onClick={toggleMenu}>

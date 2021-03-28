@@ -11,5 +11,6 @@ export const HeaderContainer = styled.div`
 
     h1{
         font-size: 1.5rem;
+        cursor: default;
     }
 `
