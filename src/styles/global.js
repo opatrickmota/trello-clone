@@ -19,7 +19,6 @@ const GlobalStyle = createGlobalStyle`
 
     html, body, #root{
         min-height: 100%;
-        max-width: 1440px;
         margin: 0 auto;
     }
 
@@ -44,6 +43,7 @@ const GlobalStyle = createGlobalStyle`
         --background: #F4F5F7;
         --light-blue: #EBF4FF;
         --green: #61BD4F;
+        --red: #F24E1E;
         --border-radius: 4px;
     }
 `;
