@@ -18,10 +18,6 @@ export const CreateBoard = styled.div`
         width: auto;
     }
 `
-export const Buttons = styled.div`
-    display: flex;
-    justify-content: space-between;
-`
 
 export const BoardList = styled.div`
     display: flex;

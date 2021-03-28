@@ -26,7 +26,7 @@ export default function Menu(){
                         </Button>
                     </header>
 
-                    <Link to="/boards">Meus Quadros</Link>
+                    <Link to="/">Meus Quadros</Link>
 
                 </MenuContent>
                 :

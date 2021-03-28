@@ -7,7 +7,7 @@ import {
 function BoardBox(props){
 
     return (
-        <BoardContainer onClick={props.open}>
+        <BoardContainer onClick={props.click}>
             {props.children}
         </BoardContainer>
     )

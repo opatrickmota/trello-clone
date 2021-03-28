@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react'
 
+import {useHistory} from 'react-router-dom';
+
 import Header from '../../components/Header'
 import ModalBackground from '../../components/ModalBackground'
 import Title from '../../components/Title'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
 import BoardBox from '../../components/BoardBox'
+import ButtonsContainer from '../../components/ButtonsContainer';
 
 import {
     BoardContainer,
     CreateBoard,
-    Buttons,
     BoardList
 } from './styles'
 
@@ -18,6 +20,8 @@ export default function Boards(){
     const [isOpen, setIsOpen] = useState(false)
     const [inputText, setInputText] = useState('')
     const [boards, setBoards] = useState([])
+
+    const history = useHistory()
 
     useEffect(()=>{
         function loadBoards(){
@@ -40,12 +44,16 @@ export default function Boards(){
         localStorage.setItem('boards', JSON.stringify(updateBoards))
     }
 
+    function specificBoard(id){
+        history.push(`/board/${id}`)
+    }
+
     return(
         <>
             <Header/>
             <BoardContainer>
                 <Title text="Quadros Pessoais"/>
-                <BoardBox open={openModal}>
+                <BoardBox click={openModal}>
                     Crie um novo quadro...
                 </BoardBox>
                 {
@@ -53,10 +61,10 @@ export default function Boards(){
                     <ModalBackground>
                         <CreateBoard>
                             <Input placeholder="Título do quadro" onChange={(e) => setInputText(e.target.value)} />
-                            <Buttons>
+                            <ButtonsContainer>
                                 <Button color="green" click={addNewBoard}>Criar Quadro</Button>
                                 <Button color="red" click={openModal}>Cancelar</Button>
-                            </Buttons> 
+                            </ButtonsContainer> 
                         </CreateBoard>
                     </ModalBackground>
                 }
@@ -66,14 +74,14 @@ export default function Boards(){
                         boards.length > 0
                         ? boards.map((board, i) => {
                             return(
-                                <BoardBox key={i}>
+                                <BoardBox click={()=>specificBoard(i)} key={i}>
                                     {board}
                                 </BoardBox>
                             )
                             
                         })
                         :
-                        <Title fontSize="1rem" marginTop="2rem" text="Você ainda não tem nenhum quadro!"/>
+                        <Title fontSize="1rem" marginTop="2rem" text="Você não tem quadros!"/>
                     }
                     
                 </BoardList>
