@@ -1,11 +1,13 @@
 import React from 'react'
+
 import GlobalStyle from './styles/global';
+import Routes from './routes'
 
 function App() {
   return (
     <>
       <GlobalStyle/>
-      <h1>Trello Clone</h1>
+      <Routes/>
     </>
   );
 }
