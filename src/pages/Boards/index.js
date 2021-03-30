@@ -8,7 +8,7 @@ import Title from '../../components/Title'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
 import BoardBox from '../../components/BoardBox'
-import ButtonsContainer from '../../components/ButtonsContainer';
+import SideBySide from '../../components/SideBySide';
 
 import {
     BoardContainer,
@@ -61,10 +61,10 @@ export default function Boards(){
                     <ModalBackground>
                         <CreateBoard>
                             <Input placeholder="Título do quadro" onChange={(e) => setInputText(e.target.value)} />
-                            <ButtonsContainer>
+                            <SideBySide>
                                 <Button color="green" click={addNewBoard}>Criar Quadro</Button>
                                 <Button color="red" click={openModal}>Cancelar</Button>
-                            </ButtonsContainer> 
+                            </SideBySide> 
                         </CreateBoard>
                     </ModalBackground>
                 }

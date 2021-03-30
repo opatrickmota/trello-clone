@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const Buttons = styled.div`
+export const Side = styled.div`
     display: flex;
     justify-content: space-between;
 `
