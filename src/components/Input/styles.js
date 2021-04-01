@@ -8,4 +8,10 @@ export const InputContainer = styled.input`
     padding: 1rem 1rem;
     margin-bottom: 1rem;
     width: 100%;
+    background: var(--${props => props.backgroundColor? props.backgroundColor: '#fff'});
+    font-size: ${props => props.fontSize && props.fontSize};
+
+    &:focus{
+        background: #ffffff;
+    }
 `

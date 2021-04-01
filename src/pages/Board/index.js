@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useHistory} from 'react-router-dom';
-import {FaExternalLinkAlt, FaEdit} from 'react-icons/fa'
+import {FaEdit} from 'react-icons/fa'
 
 import ModalBackground from '../../components/ModalBackground'
 import Header from '../../components/Header'
@@ -16,8 +16,9 @@ import {
     Card,
     Span,
     AddTask,
-    Edit,
-    Task
+    OpenEdit,
+    Task,
+    EditTask
 } from './styles'
 
 export default function Board(props){
@@ -25,6 +26,11 @@ export default function Board(props){
     const [toggleTask, setToggleTask] = useState()
     const [inputText, setInputText] = useState('')
     const [tasks, setTasks] = useState([])
+
+    const [isOpenEdit, setIsOpenEdit] = useState(false)
+    const [tableId, setTableId] = useState()
+    const [taskName, setTaskName] = useState()
+    const [ageNameTask, setAgeNameTask] = useState()
     
     const history = useHistory()
 
@@ -66,6 +72,63 @@ export default function Board(props){
         localStorage.setItem('tasks', JSON.stringify(updateTasks))
     }
 
+    function edit(tId, task){
+        setTableId(tId)
+        setTaskName(task)
+
+        toggleEdit()
+    }
+
+    function salvarEdit(){
+        toggleEdit()
+        let position
+
+        tasks.forEach((task, i)=>{
+            if(task[1] === tableId && task[2] === ageNameTask){
+                position = i
+                return
+            }
+        })
+        if(!position){
+            return
+        }
+        
+        let updateTasks = [...tasks]
+        
+        updateTasks.splice(position, 1, [props.match.params.id, tableId, taskName])
+
+        setTasks(updateTasks)
+        localStorage.setItem('tasks', JSON.stringify(updateTasks))
+    }
+
+    function removeEdit(){
+        toggleEdit()
+
+        let position
+
+        tasks.forEach((task, i)=>{
+            if(task[1] === tableId && (task[2] === taskName || task[2] === ageNameTask)){
+                position = i
+                return
+            }
+        })
+        if(!position){
+            return
+        }
+
+        let updateTasks = [...tasks]
+        
+        updateTasks.splice(position, 1)
+
+        setTasks(updateTasks)
+        localStorage.setItem('tasks', JSON.stringify(updateTasks))
+    }
+
+    function toggleEdit(){
+        setIsOpenEdit(!isOpenEdit)
+    }
+
+    
     return(
         <>
             <Header/>
@@ -81,11 +144,13 @@ export default function Board(props){
                         {
                             tasks && 
                             tasks.map((task, i) => {
-                                if(props.match.params.id == task[0] && task[1] == 0)
+                                if(props.match.params.id === task[0] && task[1] === 0)
                                     return(
                                         <Task key={i}>
                                             {task[2]}
-                                            <FaEdit/>
+                                            <OpenEdit onClick={()=>edit(task[1], task[2])}>
+                                                <FaEdit/>
+                                            </OpenEdit>
                                         </Task>
                                     )
                                 return false
@@ -93,12 +158,11 @@ export default function Board(props){
                             
                         }
                         {
-                            toggleTask == 0 &&
+                            toggleTask === 0 &&
                             <ModalBackground>
                                 <AddTask>
                                     <SideBySide>
                                         <Input placeholder="Adicione um título" onChange={(e) => setInputText(e.target.value)} />
-                                        <Edit><FaExternalLinkAlt/> Abrir Tarefa</Edit>
                                     </SideBySide>
                                     <SideBySide>
                                         <Button color="green" click={()=>salvar(0)}>Salvar</Button>
@@ -117,11 +181,13 @@ export default function Board(props){
                         {
                             tasks && 
                             tasks.map((task, i) => {
-                                if(props.match.params.id == task[0] && task[1] == 1)
+                                if(props.match.params.id === task[0] && task[1] === 1)
                                     return(
                                         <Task key={i}>
                                             {task[2]}
-                                            <FaEdit/>
+                                            <OpenEdit onClick={()=>edit(task[1], task[2])}>
+                                                <FaEdit/>
+                                            </OpenEdit>
                                         </Task>
                                     )
                                 return false
@@ -129,12 +195,11 @@ export default function Board(props){
                             
                         }
                         {
-                            toggleTask == 1 &&
+                            toggleTask === 1 &&
                             <ModalBackground>
                                 <AddTask>
                                     <SideBySide>
                                         <Input placeholder="Adicione um título" onChange={(e) => setInputText(e.target.value)} />
-                                        <Edit><FaExternalLinkAlt/> Abrir Tarefa</Edit>
                                     </SideBySide>
                                     <SideBySide>
                                         <Button color="green" click={()=>salvar(1)}>Salvar</Button>
@@ -153,11 +218,13 @@ export default function Board(props){
                         {
                             tasks && 
                             tasks.map((task, i) => {
-                                if(props.match.params.id == task[0] && task[1] == 2)
+                                if(props.match.params.id === task[0] && task[1] === 2)
                                     return(
                                         <Task key={i}>
                                             {task[2]}
-                                            <FaEdit/>
+                                            <OpenEdit onClick={()=>edit(task[1], task[2])}>
+                                                <FaEdit/>
+                                            </OpenEdit>
                                         </Task>
                                     )
                                 return false
@@ -165,12 +232,11 @@ export default function Board(props){
                             
                         }
                         {
-                            toggleTask == 2 &&
+                            toggleTask === 2 &&
                             <ModalBackground>
                                 <AddTask>
                                     <SideBySide>
                                         <Input placeholder="Adicione um título" onChange={(e) => setInputText(e.target.value)} />
-                                        <Edit><FaExternalLinkAlt/> Abrir Tarefa</Edit>
                                     </SideBySide>
                                     <SideBySide>
                                         <Button color="green" click={()=>salvar(2)}>Salvar</Button>
@@ -184,6 +250,20 @@ export default function Board(props){
 
                         <Span onClick={()=>addTask(2)}>+ Adicionar um cartão</Span>
                     </Card>
+
+                    {
+                        isOpenEdit &&
+                        <ModalBackground>
+                            <EditTask>
+                                <Input fontSize="1.5rem" backgroundColor="background" value={taskName} placeholder="Adicione um título" click={(e)=>setAgeNameTask(e.target.value)} onChange={(e) => setTaskName(e.target.value)} />
+                                <SideBySide>
+                                    <Button color="green" click={salvarEdit}>Salvar</Button>
+                                    <Button color="red" click={removeEdit}>Excluir</Button> 
+                                </SideBySide>
+                            </EditTask> 
+                        </ModalBackground>
+                    }
+                    
                 </CardContainer>
                 
             </BoardContainer>

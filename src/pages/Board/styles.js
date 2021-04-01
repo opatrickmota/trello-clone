@@ -25,6 +25,7 @@ export const Card = styled.div`
     width: 350px;
     min-width: 300px;
 
+    border-radius: var(--border-radius);
     padding: 1.5rem;
 
     @media(max-width: 420px){
@@ -47,19 +48,9 @@ export const AddTask = styled.div`
 
 `
 
-export const Edit = styled.div`
-    width: 20rem;
-    height: 100%;
-    margin-left: 1rem;
-    margin-bottom: 1rem;
-    padding: 1rem 1rem;
-    border-radius: var(--border-radius);
-    background: rgba(0, 0, 0, 0.7);
-    color: #fff;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+export const OpenEdit = styled.div`
+    cursor: pointer;
+    border: 0;
 `
 export const Task = styled.div`
     background: #fff;
@@ -70,4 +61,17 @@ export const Task = styled.div`
     padding: 1rem 1rem;
     border-radius: var(--border-radius);
     margin-top: 0.8rem; 
+`
+
+export const EditTask = styled.div`
+    background: var(--background);
+    width: 550px;
+    height: 550px;
+    border-radius: var(--border-radius);
+    padding: 1rem;
+
+    @media(max-width: 600px){
+        width: 95%;
+        height: 95%;
+    }
 `
