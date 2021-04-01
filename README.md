@@ -23,6 +23,8 @@ Com tudo instalado rode o comando: ``` yarn start ``` ou ``` npm start ```. O si
 - [x] Criar tarefas
 - [x] Excluir tarefas
 - [ ] Editar tarefas
+- [ ] Adicionar tags a tarefas
+- [ ] Mover tarefas entre colunas de um mesmo quadro
 
 <h2>Autor</h2>
 
